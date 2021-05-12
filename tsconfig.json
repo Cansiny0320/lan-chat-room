@@ -6,7 +6,9 @@
     "lib": ["es2016"], // 指定ts环境
     "outDir": "./dist", // 编译结果位置
     "removeComments": true, // 编译结果移除注释
-    "strictNullChecks": true // 在严格的null检查模式下，null和undefined值不包含在任何类型里，只允许赋值给void和本身对应的类型
+    "strictNullChecks": true, // 在严格的null检查模式下，null和undefined值不包含在任何类型里，只允许赋值给void和本身对应的类型
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports" : true
   },
   "include": ["./src"] // 指定tsc编译的范围
   // "files": ["./src/index.ts"] // 指定编译文件，须删除"include"配置
