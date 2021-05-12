@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === "development") {
 
 const port: number = 3000
 
-const server = app.listen(port, "10.17.213.92", () => {
+const server = app.listen(port, "0.0.0.0", () => {
   console.log(`Server is running at http://localhost:${port}`)
 })
 

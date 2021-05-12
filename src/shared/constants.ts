@@ -3,4 +3,5 @@ export const enum Type {
   LEAVE = "LEAVE",
   MESSAGE = "MESSAGE",
   UPDATE = "UPDATE",
+  CREATE = "CREATE",
 }

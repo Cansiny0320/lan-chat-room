@@ -9,30 +9,35 @@ class ChatRoom {
   users: {
     [id: string]: User
   }
-  messages: string[]
+  messages: {
+    content: string
+    id: string
+  }[]
+
   constructor() {
     this.sockets = {}
     this.users = {}
     this.messages = []
-    setInterval(this.update.bind(this), 100)
   }
   join(socket: Socket, username: string) {
     this.sockets[socket.id] = socket
     this.users[socket.id] = new User(username, socket.id)
+    socket.emit(Type.CREATE, new User(username, socket.id))
   }
   leave(socket: Socket) {
     delete this.sockets[socket.id]
     delete this.users[socket.id]
   }
-  update() {
-    Object.keys(this.sockets).map(playerID => {
-      const socket = this.sockets[playerID]
-      const player = this.users[playerID]
-      socket.emit(Type.UPDATE, this.messages)
-    })
+  updateMessage(socket: Socket, msg: string, self: boolean) {
+    socket.emit(Type.UPDATE, { self, msg })
   }
-  message(msg: string) {
-    this.messages.push(msg)
+
+  message(socket: Socket, user: User, msg: string) {
+    this.messages.push({
+      content: msg,
+      id: socket.id,
+    })
+    this.updateMessage(socket, msg, user.id === socket.id)
   }
 }
 

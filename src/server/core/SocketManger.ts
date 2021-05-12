@@ -11,7 +11,7 @@ class SocketManger {
 
   listen(socket: Socket) {
     console.log(`user connected! id:${socket.id}`)
-    socket.on(Type.MESSAGE, this.chatroom.message.bind(this.chatroom))
+    socket.on(Type.MESSAGE, this.chatroom.message.bind(this.chatroom, socket))
     socket.on(Type.JOIN, this.chatroom.join.bind(this.chatroom, socket))
     socket.on(Type.LEAVE, this.chatroom.leave.bind(this.chatroom, socket))
   }

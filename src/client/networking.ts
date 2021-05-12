@@ -1,8 +1,10 @@
 import io from "socket.io-client"
+import User from "../server/core/User"
 import { Type } from "../shared/constants"
-import { messageUpdate } from "./state"
+import { messageUpdate, create } from "./state"
 const socketProtocal = window.location.protocol.includes("https") ? "wss" : "ws"
 const socket = io(`${socketProtocal}://${window.location.host}`, { reconnection: false })
+
 const connectPromise = new Promise<void>(resolve => {
   socket.on("connect", () => {
     console.log("Connect to server!")
@@ -12,6 +14,7 @@ const connectPromise = new Promise<void>(resolve => {
 
 export const connect = () => {
   connectPromise.then(() => {
+    socket.on(Type.CREATE, create)
     socket.on(Type.UPDATE, messageUpdate)
     socket.on("disconnect", () => {
       console.log("Disconnected from server.")
@@ -19,10 +22,6 @@ export const connect = () => {
   })
 }
 
-export const enter = username => {
-  socket.emit(Type.JOIN, username)
-}
+export const enter = (username: string) => socket.emit(Type.JOIN, username)
 
-export const sendMessage = message => {
-  socket.emit(Type.MESSAGE, message)
-}
+export const sendMessage = (user: User, message: string) => socket.emit(Type.MESSAGE, user, message)

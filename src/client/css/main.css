@@ -35,6 +35,7 @@ body {
   padding: 10px;
   overflow: auto;
   background-color: #f5f6fa;
+  margin-top: 50px;
 }
 
 .content::-webkit-scrollbar {
@@ -73,4 +74,8 @@ body {
   outline: none;
   border: 1px solid transparent;
   white-space: nowrap;
+}
+
+.hidden {
+  display: none;
 }
