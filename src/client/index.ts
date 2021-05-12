@@ -1,24 +1,25 @@
+import { downloadAssets } from "./asset"
 import "./css/bootstrap-reboot.css"
 import "./css/main.css"
-import { connect, enter, sendMessage } from "./networking"
-import { user } from "./state"
-new Promise<void>(resolve => {
-  connect()
-  resolve()
-}).then(() => {
-  const nameInput: HTMLInputElement = document.querySelector(".name input")!
-  const nameBtn: HTMLButtonElement = document.querySelector(".name .send")!
+import { connect, login, sendMessage } from "./networking"
+Promise.all([connect(), downloadAssets()]).then(() => {
+  const nameInput: HTMLInputElement = document.querySelector(".login input")!
+  const nameBtn: HTMLButtonElement = document.querySelector(".login .send")!
   nameBtn.addEventListener("click", () => {
-    enter(nameInput.value)
-    document.querySelector(".input_wrapper.message")?.classList.remove("hidden")
-    document.querySelector(".input_wrapper.name")?.classList.add("hidden")
+    const avatar = `/assets/avatar${Math.floor(Math.random() * 5 + 1)}.jpg`
+    console.log(nameInput.value.trim())
+    if (nameInput.value.trim() !== "") {
+      login(nameInput.value.trim(), avatar)
+    } else {
+      alert("请输入用户名")
+    }
   })
 
   const input: HTMLInputElement = document.querySelector(".message input")!
   const sendBtn: HTMLElement = document.querySelector(".message .send")!
 
   sendBtn.addEventListener("click", () => {
-    sendMessage(user, input.value)
+    sendMessage(input.value)
     input.value = ""
   })
 
@@ -26,7 +27,7 @@ new Promise<void>(resolve => {
     const { code } = e
 
     if (code == "Enter") {
-      sendMessage(user, input.value)
+      sendMessage(input.value)
       input.value = ""
     }
   })

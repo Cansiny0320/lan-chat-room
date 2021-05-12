@@ -1,14 +1,17 @@
 import { Socket } from "socket.io"
-import { Type } from "../../shared/constants"
+import { ChatRoomType, ClientType, UserType } from "../../shared/socketTypes"
 import User from "./User"
+import { IUserSocket } from "./SocketManger"
+export interface ISockets {
+  [id: string]: Socket
+}
 
+export interface IUsers {
+  [name: string]: User
+}
 class ChatRoom {
-  sockets: {
-    [id: string]: Socket
-  }
-  users: {
-    [id: string]: User
-  }
+  sockets: ISockets
+  users: IUsers
   messages: {
     content: string
     id: string
@@ -19,25 +22,47 @@ class ChatRoom {
     this.users = {}
     this.messages = []
   }
-  join(socket: Socket, username: string) {
-    this.sockets[socket.id] = socket
-    this.users[socket.id] = new User(username, socket.id)
-    socket.emit(Type.CREATE, new User(username, socket.id))
+  join(io: Socket, socket: IUserSocket, username: string, avatar: string) {
+    if (this.users[username]) {
+      socket.emit(ClientType.LOGIN_ERROR)
+    } else {
+      this.sockets[socket.id] = socket
+      socket.username = username
+      const user = new User(username, avatar, socket.id)
+      this.users[username] = user
+      socket.emit(ClientType.lOGIN_OK, { username, avatar })
+      io.emit(ClientType.SYSTEM, {
+        username,
+        status: "进入",
+      })
+      io.emit(ChatRoomType.SHOW_ONLINE_USER, this.users)
+    }
+
+    // socket.emit(ChatRoomType.CREATE, new User(username, socket.id))
   }
-  leave(socket: Socket) {
+  leave(socket: IUserSocket) {
     delete this.sockets[socket.id]
     delete this.users[socket.id]
   }
-  updateMessage(socket: Socket, msg: string, self: boolean) {
-    socket.emit(Type.UPDATE, { self, msg })
+  updateMessage(socket: IUserSocket, msg: string, self: boolean) {
+    socket.emit(ChatRoomType.UPDATE, { self, msg })
   }
 
-  message(socket: Socket, user: User, msg: string) {
-    this.messages.push({
-      content: msg,
-      id: socket.id,
+  message(socket: IUserSocket, msg: string) {
+    const user = this.users[socket.username]
+    const { avatar, name } = user
+    socket.broadcast.emit(UserType.RECEIVE_MESSAGE, { msg, avatar, side: "left", username: name })
+    socket.emit(UserType.RECEIVE_MESSAGE, {
+      msg,
+      avatar,
+      side: "right",
+      username: name,
     })
-    this.updateMessage(socket, msg, user.id === socket.id)
+    // this.messages.push({
+    //   content: msg,
+    //   id: socket.id,
+    // })
+    // this.updateMessage(socket, msg, user.id === socket.id)
   }
 }
 

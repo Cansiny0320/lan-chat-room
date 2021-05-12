@@ -1,6 +1,10 @@
 import { Socket } from "socket.io"
-import { Type } from "../../shared/constants"
+import { ChatRoomType, UserType } from "../../shared/socketTypes"
 import ChatRoom from "./ChatRoom"
+
+export interface IUserSocket extends Socket {
+  username: string
+}
 class SocketManger {
   io: Socket
   chatroom: ChatRoom
@@ -9,11 +13,11 @@ class SocketManger {
     this.chatroom = chatroom
   }
 
-  listen(socket: Socket) {
+  listen(socket: IUserSocket) {
     console.log(`user connected! id:${socket.id}`)
-    socket.on(Type.MESSAGE, this.chatroom.message.bind(this.chatroom, socket))
-    socket.on(Type.JOIN, this.chatroom.join.bind(this.chatroom, socket))
-    socket.on(Type.LEAVE, this.chatroom.leave.bind(this.chatroom, socket))
+    socket.on(UserType.SEND_MESSAGE, this.chatroom.message.bind(this.chatroom, socket))
+    socket.on(ChatRoomType.JOIN, this.chatroom.join.bind(this.chatroom, this.io, socket))
+    socket.on(ChatRoomType.LEAVE, this.chatroom.leave.bind(this.chatroom, socket))
   }
 }
 

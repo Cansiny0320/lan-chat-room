@@ -17,19 +17,37 @@ body {
   position: relative;
 }
 
-.title {
+.info {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 50px;
+  padding: 0 10px;
   background-color: #f4f5f9;
+}
+.info .title {
+  width: 100%;
+  height: 50px;
   line-height: 50px;
   text-align: center;
   color: #333;
 }
 
-.content {
+.online_user .item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.online_user .item img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.main {
+  display: flex;
   flex: 1;
   width: 100%;
   padding: 10px;
@@ -37,7 +55,24 @@ body {
   background-color: #f5f6fa;
   margin-top: 50px;
 }
+.online_user {
+  height: 100%;
+  overflow: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
 
+.content {
+  flex: 15;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.online_user::-webkit-scrollbar {
+  width: 1px !important;
+}
 .content::-webkit-scrollbar {
   width: 0 !important;
 }
@@ -76,6 +111,62 @@ body {
   white-space: nowrap;
 }
 
+.login {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(85, 85, 85, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .hidden {
   display: none;
+}
+
+.content .item {
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.content .item .avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+.content__info .msg {
+  background-color: #e5e5e5;
+  padding: 10px;
+  border-radius: 12px;
+}
+.content__info .username {
+  color: #7f7f7f;
+  font-size: 12px;
+}
+.content--center {
+  justify-self: center;
+  text-align: center;
+  padding: 5px;
+  font-size: 12px;
+  background-color: #e1e2e3;
+  color: #777777;
+  border-radius: 12px;
+}
+
+.content--left {
+  align-self: flex-start;
+}
+
+.content--left .avatar {
+  margin-right: 10px;
+}
+
+.content--right .avatar {
+  margin-left: 10px;
+}
+.content--right {
+  align-self: flex-end;
 }
