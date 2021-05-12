@@ -1,5 +1,4 @@
 import { IUsers } from "../server/core/ChatRoom"
-import User from "../server/core/User"
 
 const content: HTMLElement = document.querySelector(".content")!
 const online_user: HTMLElement = document.querySelector(".online_user")!
@@ -23,11 +22,6 @@ export interface IData {
   avatar: string
   username: string
   side: "left" | "right"
-}
-
-export function messageUpdate(props: ImessageUpdate) {
-  const { self, msg } = props
-  content!.innerHTML += `<div class=${self && "self"}>${msg}</div>`
 }
 
 export function showOnlineUser(users: IUsers) {
@@ -84,4 +78,5 @@ export function updateMessage(data: IData) {
   <img class="avatar" src=${avatar}></img>
   </div>
   `
+  side === "right" && content.scrollBy(0, 1000)
 }

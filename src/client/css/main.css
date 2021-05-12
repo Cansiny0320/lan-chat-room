@@ -51,9 +51,9 @@ body {
   flex: 1;
   width: 100%;
   padding: 10px;
-  overflow: auto;
   background-color: #f5f6fa;
   margin-top: 50px;
+  overflow: auto;
 }
 .online_user {
   height: 100%;
@@ -68,6 +68,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: auto;
 }
 
 .online_user::-webkit-scrollbar {

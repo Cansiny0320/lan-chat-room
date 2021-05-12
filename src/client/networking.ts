@@ -1,8 +1,7 @@
 import io from "socket.io-client"
 
-import User from "../server/core/User"
 import { ChatRoomType, ClientType, UserType } from "../shared/socketTypes"
-import { loginError, messageUpdate, showOnlineUser, system, loginOk, updateMessage } from "./state"
+import { loginError, loginOk, showOnlineUser, system, updateMessage } from "./state"
 
 const socketProtocal = window.location.protocol.includes("https") ? "wss" : "ws"
 const socket = io(`${socketProtocal}://${window.location.host}`, { reconnection: false })
@@ -16,9 +15,7 @@ const connectPromise = new Promise<void>(resolve => {
 
 export const connect = () => {
   connectPromise.then(() => {
-    // socket.on(ClientType.lOGIN_OK, login)
     socket.on(ClientType.SYSTEM, system)
-    // socket.on(ChatRoomType.UPDATE, messageUpdate)
     socket.on(ChatRoomType.SHOW_ONLINE_USER, showOnlineUser)
     socket.on(ClientType.LOGIN_ERROR, loginError)
     socket.on(ClientType.lOGIN_OK, loginOk)

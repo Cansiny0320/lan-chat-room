@@ -1,7 +1,9 @@
-import { downloadAssets } from "./asset"
 import "./css/bootstrap-reboot.css"
 import "./css/main.css"
+
+import { downloadAssets } from "./asset"
 import { connect, login, sendMessage } from "./networking"
+
 Promise.all([connect(), downloadAssets()]).then(() => {
   const nameInput: HTMLInputElement = document.querySelector(".login input")!
   const nameBtn: HTMLButtonElement = document.querySelector(".login .send")!
@@ -19,16 +21,20 @@ Promise.all([connect(), downloadAssets()]).then(() => {
   const sendBtn: HTMLElement = document.querySelector(".message .send")!
 
   sendBtn.addEventListener("click", () => {
-    sendMessage(input.value)
-    input.value = ""
+    if (input.value) {
+      sendMessage(input.value)
+      input.value = ""
+    }
   })
 
   input.addEventListener("keydown", e => {
     const { code } = e
 
     if (code == "Enter") {
-      sendMessage(input.value)
-      input.value = ""
+      if (input.value) {
+        sendMessage(input.value)
+        input.value = ""
+      }
     }
   })
 })

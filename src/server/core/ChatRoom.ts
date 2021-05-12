@@ -1,7 +1,9 @@
 import { Socket } from "socket.io"
+
 import { ChatRoomType, ClientType, UserType } from "../../shared/socketTypes"
-import User from "./User"
 import { IUserSocket } from "./SocketManger"
+import User from "./User"
+
 export interface ISockets {
   [id: string]: Socket
 }
