@@ -181,15 +181,22 @@ body {
 .content__info .username {
   color: #7f7f7f;
   font-size: 12px;
+  margin-bottom: 5px;
 }
 .content--center {
   justify-self: center;
   text-align: center;
-  padding: 5px;
+  padding: 2px 10px;
   font-size: 12px;
   background-color: #e1e2e3;
   color: #777777;
   border-radius: 12px;
+}
+
+.time {
+  background-color: transparent;
+  color: #7f7f7f;
+  font-weight: lighter;
 }
 
 .content--left {

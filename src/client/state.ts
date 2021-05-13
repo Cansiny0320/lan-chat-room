@@ -33,7 +33,7 @@ export function showOnlineUser(users: IUsers) {
     html += `
     <div class="item">
       <img src='${user.avatar}' />
-      <div class='nickname'>${user.name.slice(0, 3)}</div>
+      <div class='nickname'>${user.name.slice(0, 10)}</div>
     </div>
     `
   })
@@ -53,7 +53,7 @@ export function loginOk(userInfo: IUserInfo) {
 export function system(systemInfo: systemInfo) {
   const { username, status } = systemInfo
   content.innerHTML += `
-  <p class="item content--center">${new Date().toTimeString().substr(0, 8)}</>
+  <p class="item content--center time">${new Date().toTimeString().substr(0, 8)}</>
   <p class="item content--center">${username} ${status}了聊天室</p>
   `
 }
