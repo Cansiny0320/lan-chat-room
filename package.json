@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon src/server/index.ts",
     "build": "webpack --config webpack.prod.js",
-    "start": "npm run build && cross-env NODE_ENV=production nodemon src/servers/index.ts"
+    "start": "npm run build && cross-env NODE_ENV=production nodemon src/server/index.ts"
   },
   "keywords": [],
   "author": "",
