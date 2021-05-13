@@ -7,43 +7,58 @@ Promise.all([connect()]).then(() => {
   const img: HTMLImageElement = document.querySelector(".image img")!
   img.src = "./assets/img.png"
   const fileInput: HTMLInputElement = document.querySelector(".image #file")!
-  fileInput.onchange = () => {
-    const file = fileInput.files![0]
-
-    const reader = new FileReader()
-
-    //文件读取出错的时候触发
-    reader.onerror = function () {
-      console.log("读取文件失败，请重试！")
+  fileInput.onchange = async () => {
+    function getBase64() {
+      return new Promise((resolve, reject) => {
+        const file = fileInput.files![0]
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onload = () => resolve(reader.result)
+        reader.onerror = error => reject(error)
+      })
     }
-    // 读取成功后
-    reader.onload = function () {
-      const img = reader.result // 读取结果
+    try {
+      const img = await getBase64()
       sendMessage({
         msg: img as string,
         type: "img",
       })
       fileInput.value = ""
+    } catch (e) {
+      console.log(e)
     }
-    reader.readAsDataURL(file) // 读取为64位
   }
-  const nameInput: HTMLInputElement = document.querySelector(".login input")!
-  const nameBtn: HTMLButtonElement = document.querySelector(".login .send")!
-  nameBtn.addEventListener("click", () => {
-    const avatar = `./assets/avatar${Math.floor(Math.random() * 5 + 1)}.jpg`
-    if (nameInput.value.trim() !== "") {
-      login(nameInput.value.trim(), avatar)
-    } else {
-      alert("请输入用户名")
-    }
-  })
+})
 
-  const input: HTMLInputElement = document.querySelector(".message .input input")!
-  const sendBtn: HTMLElement = document.querySelector(".message .send")!
-  console.log(sendBtn)
+const nameInput: HTMLInputElement = document.querySelector(".login input")!
+const nameBtn: HTMLButtonElement = document.querySelector(".login .send")!
+nameBtn.addEventListener("click", () => {
+  const avatar = `./assets/avatar${Math.floor(Math.random() * 5 + 1)}.jpg`
+  if (nameInput.value.trim() !== "") {
+    login(nameInput.value.trim(), avatar)
+  } else {
+    alert("请输入用户名")
+  }
+})
 
-  sendBtn.addEventListener("click", () => {
-    console.log(input.value)
+const input: HTMLInputElement = document.querySelector(".message .input input")!
+const sendBtn: HTMLElement = document.querySelector(".message .send")!
+
+sendBtn.addEventListener("click", () => {
+  console.log(input.value)
+  if (input.value) {
+    sendMessage({
+      msg: input.value,
+      type: "text",
+    })
+    input.value = ""
+  }
+})
+
+input.addEventListener("keydown", e => {
+  const { keyCode } = e
+
+  if (keyCode === 13) {
     if (input.value) {
       sendMessage({
         msg: input.value,
@@ -51,19 +66,5 @@ Promise.all([connect()]).then(() => {
       })
       input.value = ""
     }
-  })
-
-  input.addEventListener("keydown", e => {
-    const { keyCode } = e
-
-    if (keyCode === 13) {
-      if (input.value) {
-        sendMessage({
-          msg: input.value,
-          type: "text",
-        })
-        input.value = ""
-      }
-    }
-  })
+  }
 })
