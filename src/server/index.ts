@@ -19,9 +19,9 @@ if (process.env.NODE_ENV === "development") {
 }
 
 const port = 3000
-
-const server = app.listen(port, "10.20.81.70", () => {
-  console.log(`Server is running at http://localhost:${port}`)
+const domain = "10.20.81.70"
+const server = app.listen(port, domain, () => {
+  console.log(`Server is running at http://${domain}:${port}`)
 })
 
 const chatroom = new ChatRoom()

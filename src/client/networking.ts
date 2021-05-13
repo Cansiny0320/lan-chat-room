@@ -8,7 +8,6 @@ const socket = io(`${socketProtocal}://${window.location.host}`, { reconnection:
 
 const connectPromise = new Promise<void>(resolve => {
   socket.on("connect", () => {
-    console.log("Connect to server!")
     resolve()
   })
 })

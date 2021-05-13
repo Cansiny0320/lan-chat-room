@@ -8,7 +8,6 @@ Promise.all([connect()]).then(() => {
   const nameBtn: HTMLButtonElement = document.querySelector(".login .send")!
   nameBtn.addEventListener("click", () => {
     const avatar = `./assets/avatar${Math.floor(Math.random() * 5 + 1)}.jpg`
-    console.log(nameInput.value.trim())
     if (nameInput.value.trim() !== "") {
       login(nameInput.value.trim(), avatar)
     } else {
