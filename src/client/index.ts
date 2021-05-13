@@ -38,10 +38,12 @@ Promise.all([connect()]).then(() => {
     }
   })
 
-  const input: HTMLInputElement = document.querySelector(".message input")!
+  const input: HTMLInputElement = document.querySelector(".message .input input")!
   const sendBtn: HTMLElement = document.querySelector(".message .send")!
+  console.log(sendBtn)
 
   sendBtn.addEventListener("click", () => {
+    console.log(input.value)
     if (input.value) {
       sendMessage({
         msg: input.value,
