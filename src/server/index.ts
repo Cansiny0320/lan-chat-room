@@ -32,7 +32,9 @@ async function run() {
   })
   const chatroom = new ChatRoom()
 
-  const io: Socket = (socketio as unknown as Function)(server)
+  const io: Socket = (socketio as unknown as Function)(server, {
+    maxHttpBufferSize: 1e8,
+  })
   const socket = new SocketManger(io, chatroom)
 
   io.on("connect", item => {

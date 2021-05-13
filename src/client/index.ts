@@ -23,9 +23,10 @@ Promise.all([connect()]).then(() => {
         msg: img as string,
         type: "img",
       })
-      fileInput.value = ""
     } catch (e) {
       console.log(e)
+    } finally {
+      fileInput.value = ""
     }
   }
 })
