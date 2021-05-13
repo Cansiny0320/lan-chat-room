@@ -17,11 +17,12 @@ export interface IUserInfo {
   username: string
 }
 
-export interface IData {
+export interface IReceiveData {
   msg: string
   avatar: string
   username: string
   side: "left" | "right"
+  type: "img" | "text"
 }
 
 export function showOnlineUser(users: IUsers) {
@@ -56,11 +57,12 @@ export function system(systemInfo: systemInfo) {
   `
 }
 
-export function updateMessage(data: IData) {
-  const { msg, side, avatar, username } = data
-  content.innerHTML +=
-    side === "left"
-      ? `
+export function updateMessage(data: IReceiveData) {
+  const { msg, side, avatar, username, type } = data
+  if (type === "text") {
+    content.innerHTML +=
+      side === "left"
+        ? `
   <div class="item content--left">
   <img class="avatar" src=${avatar}></img>
   <div class='content__info'>
@@ -69,7 +71,7 @@ export function updateMessage(data: IData) {
   </div>
   </div>
   `
-      : `
+        : `
   <div class="item content--right">
   <div class='content__info'>
   <p class='username'>${username}</p>
@@ -78,5 +80,27 @@ export function updateMessage(data: IData) {
   <img class="avatar" src=${avatar}></img>
   </div>
   `
-  side === "right" && content.scrollBy(0, 1000)
+  } else {
+    content.innerHTML +=
+      side === "left"
+        ? `
+  <div class="item content--left">
+  <img class="avatar" src=${avatar}></img>
+  <div class='content__info'>
+  <p class='username'>${username}</p>
+  <img class="send_img" src='${msg}'></img>
+  </div>
+  </div>
+  `
+        : `
+  <div class="item content--right">
+  <div class='content__info'>
+  <p class='username'>${username}</p>
+  <img class="send_img" src='${msg}'></img>
+  </div>
+  <img class="avatar" src=${avatar}></img>
+  </div>
+  `
+  }
+  content.scrollBy(0, 1000)
 }

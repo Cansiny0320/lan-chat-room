@@ -1,4 +1,5 @@
 import { Socket } from "socket.io"
+import { ISendData } from "../../client/networking"
 
 import { ChatRoomType, ClientType, UserType } from "../../shared/socketTypes"
 import { IUserSocket } from "./SocketManger"
@@ -50,12 +51,20 @@ class ChatRoom {
     socket.emit(ChatRoomType.UPDATE, { self, msg })
   }
 
-  message(socket: IUserSocket, msg: string) {
+  message(socket: IUserSocket, data: ISendData) {
     const user = this.users[socket.username]
     const { avatar, name } = user
-    socket.broadcast.emit(UserType.RECEIVE_MESSAGE, { msg, avatar, side: "left", username: name })
+    const { msg, type } = data
+    socket.broadcast.emit(UserType.RECEIVE_MESSAGE, {
+      msg,
+      type,
+      avatar,
+      side: "left",
+      username: name,
+    })
     socket.emit(UserType.RECEIVE_MESSAGE, {
       msg,
+      type,
       avatar,
       side: "right",
       username: name,
