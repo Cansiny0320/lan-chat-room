@@ -1,14 +1,13 @@
 import "./css/bootstrap-reboot.css"
 import "./css/main.css"
 
-import { downloadAssets } from "./asset"
 import { connect, login, sendMessage } from "./networking"
 
-Promise.all([connect(), downloadAssets()]).then(() => {
+Promise.all([connect()]).then(() => {
   const nameInput: HTMLInputElement = document.querySelector(".login input")!
   const nameBtn: HTMLButtonElement = document.querySelector(".login .send")!
   nameBtn.addEventListener("click", () => {
-    const avatar = `/assets/avatar${Math.floor(Math.random() * 5 + 1)}.jpg`
+    const avatar = `./assets/avatar${Math.floor(Math.random() * 5 + 1)}.jpg`
     console.log(nameInput.value.trim())
     if (nameInput.value.trim() !== "") {
       login(nameInput.value.trim(), avatar)
@@ -28,9 +27,9 @@ Promise.all([connect(), downloadAssets()]).then(() => {
   })
 
   input.addEventListener("keydown", e => {
-    const { code } = e
+    const { keyCode } = e
 
-    if (code == "Enter") {
+    if (keyCode === 13) {
       if (input.value) {
         sendMessage(input.value)
         input.value = ""

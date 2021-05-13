@@ -171,3 +171,12 @@ body {
 .content--right {
   align-self: flex-end;
 }
+
+.content--right .content__info .msg {
+  background:#12b7f5;
+  color:#fff;
+}
+
+.content--right .content__info .username {
+  text-align: right;
+}
