@@ -24,7 +24,9 @@ export const connect = () => {
     socket.on(ClientType.LOGIN_ERROR, loginError)
     socket.on(ClientType.lOGIN_OK, loginOk)
     socket.on(UserType.RECEIVE_MESSAGE, updateMessage)
-    socket.on("disconnect", () => {
+    socket.on("disconnect", reason => {
+      console.log("disconnect reason: " + reason)
+
       disconnect()
     })
   })
