@@ -33,7 +33,7 @@ export function showOnlineUser(users: IUsers) {
     html += `
     <div class="item">
       <img src='${user.avatar}' />
-      <div class='nickname'>${user.name.slice(0, 10)}</div>
+      <div class='nickname'>${user.name.slice(0, 5)}</div>
     </div>
     `
   })

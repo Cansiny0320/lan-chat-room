@@ -34,7 +34,7 @@ Promise.all([connect()]).then(() => {
 const nameInput: HTMLInputElement = document.querySelector(".login input")!
 const nameBtn: HTMLButtonElement = document.querySelector(".login .send")!
 nameBtn.addEventListener("click", () => {
-  const avatar = `./assets/avatar${Math.floor(Math.random() * 5 + 1)}.jpg`
+  const avatar = `./assets/avatar${Math.floor(Math.random() * 8 + 1)}.jpg`
   if (nameInput.value.trim() !== "") {
     login(nameInput.value.trim(), avatar)
   } else {
