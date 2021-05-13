@@ -1,7 +1,7 @@
 import io from "socket.io-client"
 
 import { ChatRoomType, ClientType, UserType } from "../shared/socketTypes"
-import { loginError, loginOk, showOnlineUser, system, updateMessage, disconnect } from "./state"
+import { disconnect, loginError, loginOk, showOnlineUser, system, updateMessage } from "./state"
 
 export interface ISendData {
   msg: string
@@ -19,7 +19,6 @@ const connectPromise = new Promise<void>(resolve => {
 
 export const connect = () => {
   connectPromise.then(() => {
-    const fileInput: HTMLInputElement = document.querySelector(".image #file")!
     socket.on(ClientType.SYSTEM, system)
     socket.on(ChatRoomType.SHOW_ONLINE_USER, showOnlineUser)
     socket.on(ClientType.LOGIN_ERROR, loginError)
@@ -31,7 +30,8 @@ export const connect = () => {
   })
 }
 
-export const login = (username: string, avatar: string) =>
+export const login = (username: string, avatar: string) => {
   socket.emit(ChatRoomType.JOIN, username, avatar)
+}
 
 export const sendMessage = (data: ISendData) => socket.emit(UserType.SEND_MESSAGE, data)

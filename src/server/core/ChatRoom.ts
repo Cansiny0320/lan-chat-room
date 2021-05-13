@@ -40,12 +40,16 @@ class ChatRoom {
       })
       io.emit(ChatRoomType.SHOW_ONLINE_USER, this.users)
     }
-
-    // socket.emit(ChatRoomType.CREATE, new User(username, socket.id))
   }
-  leave(socket: IUserSocket) {
+  leave(io: Socket, socket: IUserSocket) {
     delete this.sockets[socket.id]
-    delete this.users[socket.id]
+    delete this.users[socket.username]
+    console.log(socket.username + " disconnected!")
+    io.emit(ClientType.SYSTEM, {
+      username: socket.username,
+      status: "离开",
+    })
+    io.emit(ChatRoomType.SHOW_ONLINE_USER, this.users)
   }
   updateMessage(socket: IUserSocket, msg: string, self: boolean) {
     socket.emit(ChatRoomType.UPDATE, { self, msg })

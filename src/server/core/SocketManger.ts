@@ -18,7 +18,7 @@ class SocketManger {
     console.log(`user connected! id:${socket.id}`)
     socket.on(UserType.SEND_MESSAGE, this.chatroom.message.bind(this.chatroom, socket))
     socket.on(ChatRoomType.JOIN, this.chatroom.join.bind(this.chatroom, this.io, socket))
-    socket.on(ChatRoomType.LEAVE, this.chatroom.leave.bind(this.chatroom, socket))
+    socket.on("disconnect", this.chatroom.leave.bind(this.chatroom, this.io, socket))
   }
 }
 

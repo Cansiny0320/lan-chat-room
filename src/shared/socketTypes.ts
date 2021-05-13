@@ -1,9 +1,7 @@
 export const enum ChatRoomType {
   JOIN = "JOIN",
-  LEAVE = "LEAVE",
   MESSAGE = "MESSAGE",
   UPDATE = "UPDATE",
-  CREATE = "CREATE",
   SHOW_ONLINE_USER = "SHOW_ONLINE_USER",
 }
 
