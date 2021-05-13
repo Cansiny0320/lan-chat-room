@@ -1,7 +1,7 @@
 import io from "socket.io-client"
 
 import { ChatRoomType, ClientType, UserType } from "../shared/socketTypes"
-import { loginError, loginOk, showOnlineUser, system, updateMessage } from "./state"
+import { loginError, loginOk, showOnlineUser, system, updateMessage, disconnect } from "./state"
 
 export interface ISendData {
   msg: string
@@ -26,7 +26,7 @@ export const connect = () => {
     socket.on(ClientType.lOGIN_OK, loginOk)
     socket.on(UserType.RECEIVE_MESSAGE, updateMessage)
     socket.on("disconnect", () => {
-      console.log("Disconnected from server.")
+      disconnect()
     })
   })
 }

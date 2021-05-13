@@ -2,6 +2,7 @@ import { IUsers } from "../server/core/ChatRoom"
 
 const content: HTMLElement = document.querySelector(".content")!
 const online_user: HTMLElement = document.querySelector(".online_user")!
+const chatroom: HTMLElement = document.querySelector("#chatroom")!
 interface ImessageUpdate {
   self: boolean
   msg: string
@@ -103,4 +104,8 @@ export function updateMessage(data: IReceiveData) {
   `
   }
   content.scrollBy(0, 1000)
+}
+
+export function disconnect() {
+  chatroom.innerHTML += "<div class='disconnect'>您已离线，请刷新重新登录</div>"
 }

@@ -9,7 +9,6 @@ Promise.all([connect()]).then(() => {
   const fileInput: HTMLInputElement = document.querySelector(".image #file")!
   fileInput.onchange = () => {
     const file = fileInput.files![0]
-    console.log(file)
 
     const reader = new FileReader()
 
