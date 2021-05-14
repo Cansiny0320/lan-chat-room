@@ -2,8 +2,6 @@
 
 基于 express + socket.io
 
-线上地址（不保证稳定）：http://lan-chat-cansiny.cn.utools.club/
-
 ### 实现功能
 
 - 用户进入/离开提示
